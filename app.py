@@ -602,13 +602,20 @@ with col_input:
         "Roadmap for AGI development in the next 5 years",
     ]
 
+    def _set_topic(value):
+        st.session_state.topic_input = value
+
     st.markdown('<div class="example-row">', unsafe_allow_html=True)
     ex_cols = st.columns(len(examples))
     for col, ex in zip(ex_cols, examples):
         with col:
-            if st.button(ex, key=f"example_{ex}", use_container_width=True):
-                st.session_state.topic_input = ex
-                st.rerun()
+            st.button(
+                ex,
+                key=f"example_{ex}",
+                use_container_width=True,
+                on_click=_set_topic,
+                args=(ex,),
+            )
     st.markdown('</div>', unsafe_allow_html=True)
 
 with col_pipeline:
